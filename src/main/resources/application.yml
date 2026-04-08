@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/price_tracker
+    username: postgres
+    password: "123456"
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+server:
+  port: 8080
+
+app:
+  scheduler:
+    price-check-interval: 1800000 # 30 minutos — verifica alertas
+    price-fetch-interval: 1800000  # 30 minutos — busca preços
+  mercadolivre:
+    api-url: https://api.mercadolibre.com/items
+  jwt:
+    secret: ${JWT_SECRET:3f8a2c1d9e74b650f3a8c91d7e24b650f3a8c91d7e24b650f3a8c91d7e24b650}
+    expiration: 86400000 # 24 horas em milissegundos
+

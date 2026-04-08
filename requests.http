@@ -1,0 +1,182 @@
+### Price Tracker API
+### Base URL: http://localhost:8080
+
+# =============================================
+# PRODUCTS
+# =============================================
+
+### Criar produto (Mercado Livre)
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "Notebook Dell Inspiron 15",
+  "url": "https://www.mercadolivre.com.br/notebook-dell-inspiron-15/p/MLB123456",
+  "provider": "MERCADO_LIVRE"
+}
+
+###
+
+### Criar produto (Amazon)
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "Fone de Ouvido Sony WH-1000XM5",
+  "url": "https://www.amazon.com.br/sony-wh1000xm5/dp/B09XS7JWHH",
+  "provider": "AMAZON"
+}
+
+###
+
+### Criar produto (Other)
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "Câmera Canon EOS R50",
+  "url": "https://www.kabum.com.br/produto/canon-eos-r50",
+  "provider": "OTHER"
+}
+
+###
+
+### Criar produto - Erro de validação (campos obrigatórios vazios)
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "",
+  "url": "",
+  "provider": null
+}
+
+###
+
+### Listar todos os produtos
+GET http://localhost:8080/products
+
+###
+
+### Buscar produto por ID
+GET http://localhost:8080/products/1
+
+###
+
+### Buscar produto por ID - Not Found
+GET http://localhost:8080/products/9999
+
+###
+
+# =============================================
+# PRICE HISTORY
+# =============================================
+
+### Registrar preço para produto 1
+POST http://localhost:8080/products/1/prices
+Content-Type: application/json
+
+{
+  "price": 2700.00
+}
+
+###
+
+### Registrar outro preço para produto 1
+POST http://localhost:8080/products/1/prices
+Content-Type: application/json
+
+{
+  "price": 2950.00
+}
+
+###
+
+### Listar histórico de preços do produto 1
+GET http://localhost:8080/products/1/prices
+
+###
+
+### Produto inexistente
+POST http://localhost:8080/products/9999/prices
+Content-Type: application/json
+
+{
+  "price": 100.00
+}
+
+###
+
+### Preço inválido (menor que 0.01)
+POST http://localhost:8080/products/1/prices
+Content-Type: application/json
+
+{
+  "price": 0.00
+}
+
+###
+
+# =============================================
+# PRICE ALERTS
+# =============================================
+
+### Criar alerta para produto 1 (targetPrice: 2800.00)
+POST http://localhost:8080/products/1/alerts
+Content-Type: application/json
+
+{
+  "targetPrice": 2800.00
+}
+
+###
+
+### Listar alertas do produto 1
+GET http://localhost:8080/products/1/alerts
+
+###
+
+### Verificar alertas - preço ABAIXO do alvo (deve TRIGGERAR)
+POST http://localhost:8080/alerts/check
+Content-Type: application/json
+
+{
+  "productId": 1,
+  "currentPrice": 2750.00
+}
+
+###
+
+### Verificar alertas - preço ACIMA do alvo (alerta continua ACTIVE)
+POST http://localhost:8080/alerts/check
+Content-Type: application/json
+
+{
+  "productId": 1,
+  "currentPrice": 2900.00
+}
+
+###
+
+### Desativar alerta (ACTIVE → DISABLED)
+PATCH http://localhost:8080/alerts/1/disable
+
+###
+
+### Produto inexistente - 404
+POST http://localhost:8080/products/9999/alerts
+Content-Type: application/json
+
+{
+  "targetPrice": 100.00
+}
+
+###
+
+### Preço alvo inválido - 400 Bad Request
+POST http://localhost:8080/products/1/alerts
+Content-Type: application/json
+
+{
+  "targetPrice": 0.00
+}
