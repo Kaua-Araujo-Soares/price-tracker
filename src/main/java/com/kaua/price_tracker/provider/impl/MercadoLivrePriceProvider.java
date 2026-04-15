@@ -21,6 +21,8 @@ public class MercadoLivrePriceProvider implements PriceProvider {
     public MercadoLivrePriceProvider(@Value("${app.mercadolivre.api-url}") String apiUrl) {
         this.webClient = WebClient.builder()
                 .baseUrl(apiUrl)
+                .defaultHeader("User-Agent", "Mozilla/5.0")
+                .defaultHeader("Accept", "application/json")
                 .build();
     }
 

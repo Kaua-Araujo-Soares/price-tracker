@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Price Tracker — Produtos</title>
+    <title>Price Tracker — Products</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -16,11 +16,11 @@
             <i class="bi bi-graph-up-arrow me-2"></i>Price Tracker
         </a>
         <div class="navbar-nav ms-auto align-items-center gap-2">
-            <a class="nav-link active" th:href="@{/products}"><i class="bi bi-box me-1"></i>Produtos</a>
-            <a class="nav-link" th:href="@{/alerts}"><i class="bi bi-bell me-1"></i>Alertas</a>
+            <a class="nav-link active" th:href="@{/products}"><i class="bi bi-box me-1"></i>Products</a>
+            <a class="nav-link" th:href="@{/alerts}"><i class="bi bi-bell me-1"></i>Alerts</a>
             <form th:action="@{/logout}" method="post" class="d-inline">
                 <button class="btn btn-outline-danger btn-sm ms-2">
-                    <i class="bi bi-box-arrow-right me-1"></i>Sair
+                    <i class="bi bi-box-arrow-right me-1"></i>Sign Out
                 </button>
             </form>
         </div>
@@ -30,20 +30,20 @@
 <div class="container py-4">
     <div class="page-header mb-4 d-flex justify-content-between align-items-center">
         <div>
-            <h1 class="page-title">Produtos</h1>
-            <p class="page-subtitle">Todos os produtos que você está monitorando</p>
+            <h1 class="page-title">Products</h1>
+            <p class="page-subtitle">All products you are currently monitoring</p>
         </div>
         <a th:href="@{/products/new}" class="btn btn-primary">
-            <i class="bi bi-plus-lg me-2"></i>Novo Produto
+            <i class="bi bi-plus-lg me-2"></i>New Product
         </a>
     </div>
 
     <div th:if="${#lists.isEmpty(products)}" class="empty-state-full">
         <i class="bi bi-inbox fs-1 mb-3 text-muted"></i>
-        <h5>Nenhum produto cadastrado ainda</h5>
-        <p class="text-muted">Comece adicionando um produto para monitorar os preços.</p>
+        <h5>No products added yet</h5>
+        <p class="text-muted">Start by adding a product to track its prices.</p>
         <a th:href="@{/products/new}" class="btn btn-primary mt-2">
-            <i class="bi bi-plus-lg me-2"></i>Adicionar primeiro produto
+            <i class="bi bi-plus-lg me-2"></i>Add your first product
         </a>
     </div>
 
@@ -52,17 +52,17 @@
             <div class="product-card">
                 <div class="product-card-header">
                     <span class="provider-badge" th:text="${product.provider}">ML</span>
-                    <span class="product-date text-muted" th:text="${#temporals.format(product.createdAt, 'dd/MM/yyyy')}">01/01/2024</span>
+                    <span class="product-date text-muted" th:text="${#temporals.format(product.createdAt, 'MM/dd/yyyy')}">01/01/2024</span>
                 </div>
                 <div class="product-card-body">
-                    <h5 class="product-name" th:text="${product.name}">Nome do Produto</h5>
+                    <h5 class="product-name" th:text="${product.name}">Product Name</h5>
                     <a th:href="${product.url}" target="_blank" class="product-url text-truncate d-block text-muted">
                         <i class="bi bi-link-45deg me-1"></i><span th:text="${product.url}">url</span>
                     </a>
                 </div>
                 <div class="product-card-footer">
                     <a th:href="@{/products/{id}(id=${product.id})}" class="btn btn-primary btn-sm w-100">
-                        <i class="bi bi-bar-chart me-1"></i>Ver histórico e alertas
+                        <i class="bi bi-bar-chart me-1"></i>View history &amp; alerts
                     </a>
                 </div>
             </div>
